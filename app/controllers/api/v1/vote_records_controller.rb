@@ -1,2 +1,38 @@
-class VoteRecordsController < ApplicationController
+class Api::V1::VoteRecordsController < ApplicationController
+	
+	# [GET]/[POST] user voting info on a certain vote
+	def info
+		vote = Vote.find(params[:id])
+		@vote_record = VoteRecord.find_by(vote: vote, user: current_user)
+		if @vote_record
+			render json: { response: VoteRecordSerializer.new(@vote_record) }, status: :ok
+		else
+			if vote && vote.status == "progressing" 
+				@vote_record = VoteRecord.create!(vote: vote, user: current_user, status: "start")
+				render json: { response: VoteRecordSerializer.new(@vote_record) }, status: :created
+			elsif vote && vote.status == "closed"
+				render json: { message: "the vote is closed" }, status: :forbidden
+			else
+				render json: { message: "vote not found" }, status: :not_found
+			end
+		end
+	end
+
+	# [PATCH] user vote
+	def update
+		vote = Vote.find(params[:id])
+		@vote_record = VoteRecord.find_by(vote: vote, user: current_user)
+		if @vote_record
+			@vote_record.update(vote_record_update_params)
+			render json: { response: VoteRecordSerializer.new(@vote_record) }, status: :ok
+		else
+			render json: { message: "vote record not found" }, status: :not_found
+		end
+	end
+
+	private
+
+	def vote_record_update_params
+		params.require(:vote_record).permit(:vote_one, :vote_two, :status)
+	end
 end
