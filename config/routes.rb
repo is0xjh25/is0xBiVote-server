@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  resources :vote_records
-  resources :upvotes
-  resources :posts
-  resources :votes
-  resources :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      post '/login', to: 'auth#create'
+      post '/users', to: 'users#create'
+      get '/username_exist/:username', to: 'users#find_username'
+      get '/email_exist/:email', to: 'users#find_email', :constraints => { :email => /[^\/]+/ }
+      get '/profile', to: 'users#profile'
+      patch '/profile', to: 'users#update'
+    end
+  end
 end
