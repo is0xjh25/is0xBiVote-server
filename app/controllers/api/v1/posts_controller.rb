@@ -6,29 +6,31 @@ class Api::V1::PostsController < ApplicationController
 
 	# [POST] new post
 	def create
-		vote = Vote.find(params[:id])
-		if vote
-			@post = Post.find_by(user: current_user, vote: vote)
-			if @post
-				render json: { response: PostSerializer.new(@post) }, status: :ok
-			else
-				@post = Post.create(user: current_user, vote: vote, content: post_create_params[:content])
-				render json: { response: PostSerializer.new(@post) }, status: :created
-			end
+		
+		vote = Vote.find_by_id(params[:id])
+		return render json: { error: "vote not found" }, status: :not_found if !vote
+
+		@post = Post.find_by(user: current_user, vote: vote)
+		if @post
+			render json: { post: PostSerializer.new(@post) }, status: :ok
 		else
-			render json: { message: "vote not found" }, status: :not_found
+			@post = Post.create(user: current_user, vote: vote, content: post_create_params[:content])
+			render json: { post: PostSerializer.new(@post) }, status: :created
 		end
 	end
 
 	# [DELETE] user vote
 	def destroy
-		vote = Vote.find(params[:id])
+		
+		vote = Vote.find_by_id(params[:id])
+		return render json: { error: "vote not found" }, status: :not_found if !vote
+		
 		@post = Post.find_by(user: current_user, vote: vote)
 		if @post
 			@post.delete
-			render json: { message: "post has been remove" }, status: :accepted
+			render json: { post: "post has been removed" }, status: :accepted
 		else
-			render json: { message: "record not found" }, status: :not_found
+			render json: { error: "post not found" }, status: :not_found
 		end
 	end
 

@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 		post '/login', to: 'auth#create'
 		
 		post '/users', to: 'users#create'
-		get '/username_exist/:username', to: 'users#find_username'
-		get '/email_exist/:email', to: 'users#find_email', :constraints => { :email => /[^\/]+/ }
 		get '/profile', to: 'users#info'
 		patch '/profile', to: 'users#update'
 		
