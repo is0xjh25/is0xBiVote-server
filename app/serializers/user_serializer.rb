@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
 	def statistics
 		
 		data = {}
-		
+
 		data[:total_votes] = count_total_votes
 		data[:being_majority] = count_being_majority
 		data[:total_upvotes] = count_total_upvotes
@@ -23,6 +23,7 @@ class UserSerializer < ActiveModel::Serializer
 		
 		res = ActiveRecord::Base.connection.execute(query)
 		output = res[0]['count']
+		
 		return output
 	end
 

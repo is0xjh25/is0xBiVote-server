@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApplicationController
 		user = User.create(user_create_params)
 		
 		if user.valid?
-			token = encode_token({ user_id: user.id })
+			token = encode_token({ user_id: user.id, due_time: Time.now + 7200 })
 			return render json: { user: UserSerializer.new(user), jwt: token }, status: :created
 		else
 			if find_username(user_create_params[:username]) 

@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
-
 	before_action :authorized
-  
+
 	def encode_token(payload)
 		# should store secret in env variable
 		JWT.encode(payload, 'my_s3cr3t')
@@ -27,7 +26,13 @@ class ApplicationController < ActionController::API
 	def current_user
 		if decoded_token
 			user_id = decoded_token[0]['user_id']
-			@user = User.find_by(id: user_id)
+			due_time = decoded_token[0]['due_time']
+			puts(due_time > Time.now)
+			if due_time > Time.now
+				@user = User.find_by(id: user_id)
+			else
+				@user = nil
+			end
 		end
 	end
 
