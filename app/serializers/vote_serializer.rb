@@ -22,7 +22,7 @@ class VoteSerializer < ActiveModel::Serializer
         
         query = 
             "SELECT COUNT (*) FROM vote_records
-            WHERE vote_id=#{object.id} AND vote_two='#{selection}'"
+            WHERE vote_id = #{object.id} AND vote_two = '#{selection}'"
         
         res = ActiveRecord::Base.connection.execute(query)
         output = res[0]['count']
@@ -44,7 +44,7 @@ class VoteSerializer < ActiveModel::Serializer
         
         query = 
             "SELECT COUNT(*) FROM vote_records
-            WHERE vote_id=#{object.id} AND vote_one!=vote_two AND vote_one!='no_opinion'"
+            WHERE vote_id = #{object.id} AND vote_one != vote_two AND vote_one != 'no_opinion'"
         
         res = ActiveRecord::Base.connection.execute(query)
         output = res[0]['count']
@@ -56,9 +56,11 @@ class VoteSerializer < ActiveModel::Serializer
         
         query = 
         "SELECT COUNT(*) FROM vote_records
-        WHERE vote_id=#{object.id} AND vote_two!='no_opinion' AND vote_one='no_opinion'"
+        WHERE vote_id = #{object.id} AND vote_two != 'no_opinion' AND vote_one = 'no_opinion'"
     
         res = ActiveRecord::Base.connection.execute(query)
         output = res[0]['count']
+
+        return output
     end
 end

@@ -17,8 +17,7 @@ class UserSerializer < ActiveModel::Serializer
 	def count_total_votes
 		
 		query =
-			"SELECT COUNT(*)
-			FROM vote_records 
+			"SELECT COUNT(*) FROM vote_records 
 			WHERE user_id = #{object.id}"
 		
 		res = ActiveRecord::Base.connection.execute(query)
@@ -48,8 +47,8 @@ class UserSerializer < ActiveModel::Serializer
 
 		# user vote
 		query =
-			"SELECT vote_id, vote_two from vote_records
-			where user_id = #{object.id};"
+			"SELECT vote_id, vote_two FROM vote_records
+			WHERE user_id = #{object.id};"
 
 		res = ActiveRecord::Base.connection.execute(query)
 		user_vote = res
@@ -77,6 +76,4 @@ class UserSerializer < ActiveModel::Serializer
 		
 		return output
 	end
-
-
 end
