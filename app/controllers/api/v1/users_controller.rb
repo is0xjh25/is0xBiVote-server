@@ -8,7 +8,9 @@ class Api::V1::UsersController < ApplicationController
 
 	# [POST] create new user
 	def create
+
 		@user = User.create(user_create_params)
+		
 		if @user.valid?
 			@token = encode_token({ user_id: @user.id })
 			return render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
@@ -22,8 +24,7 @@ class Api::V1::UsersController < ApplicationController
 	end
 
 	# [PATCH] update new user
-	def update
-		return render json: { error: 'failed to edit user' }, status: :unprocessable_entityif !current_user.valid?
+	def update		
 		if find_email(user_create_params[:email])
 			return render json: { error: 'email is registered' }, status: :conflict
 		else
@@ -52,13 +53,3 @@ class Api::V1::UsersController < ApplicationController
 		return User.where("lower(email) =?", e.downcase).first
 	end
 end
-
-# total_upvotes
-# SELECT count(*) from upvotes
-# where upvotes.post_id in (
-# SELECT posts.id from posts
-# where posts.user_id = 1) 
-
-# total_votes
-# SELECT count(*) from vote_records
-# where user_id = 3;

@@ -2,14 +2,14 @@ class Api::V1::VoteRecordsController < ApplicationController
 	
 	# [GET]/[POST] user voting info on a certain vote
 	def info
-		
+
 		vote = Vote.find_by_id(params[:id])
 		return render json: { error: "vote not found" }, status: :not_found if !vote
 		
 		@vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 
 		if @vote_record
-			return render json: { response: VoteRecordSerializer.new(@vote_record) }, status: :ok
+			return render json: { vote_record: VoteRecordSerializer.new(@vote_record) }, status: :ok
 		else
 			if vote.status == "progressing" 
 				@vote_record = VoteRecord.create(vote: vote, user: current_user, status: "start")
@@ -27,6 +27,7 @@ class Api::V1::VoteRecordsController < ApplicationController
 		return render json: { error: "vote not found" }, status: :not_found if !vote
 
 		@vote_record = VoteRecord.find_by(vote: vote, user: current_user)
+		
 		if @vote_record
 			@vote_record.update(vote_record_update_params)
 			render json: { vote_record: VoteRecordSerializer.new(@vote_record) }, status: :ok

@@ -1,8 +1,4 @@
 class User < ApplicationRecord
-	has_many :vote_records
-	has_many :votes, through: :vote_records
-	has_many :upvotes
-	has_many :posts
 	has_secure_password
 
 	# validation
