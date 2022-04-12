@@ -26,7 +26,7 @@ class PostSerializer < ActiveModel::Serializer
 	end
 
 	def upvoted
-		upvoted = Upvote.find_by(post_id: object.id, user_id: object.user_id)
+		upvoted = Upvote.find_by(post_id: object.id, user_id: @instance_options[:user_id])
 		return upvoted.present?
 	end
 end
