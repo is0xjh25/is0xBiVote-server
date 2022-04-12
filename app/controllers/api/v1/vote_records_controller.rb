@@ -9,7 +9,7 @@ class Api::V1::VoteRecordsController < ApplicationController
 		vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 
 		if vote_record
-			return render json: { vote: VoteSerializer.new(vote), vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
+			return render json: { vote: VoteSerializer.new(vote), vote_record: VoteRecordSerializer.new(vote_record), post: PostCollectSerializer.new(vote) }, status: :ok
 		else
 			if vote.status == "progressing" 
 				vote_record = VoteRecord.create(vote: vote, user: current_user, status: "start")

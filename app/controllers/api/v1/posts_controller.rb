@@ -1,9 +1,5 @@
 class Api::V1::PostsController < ApplicationController
 	
-	# [GET] post on a certain vote (yes, no, owned)
-	def info
-	end
-
 	# [POST] new post
 	def create
 		
@@ -44,4 +40,3 @@ class Api::V1::PostsController < ApplicationController
 		params.require(:post).permit(:content)
 	end
 end
-

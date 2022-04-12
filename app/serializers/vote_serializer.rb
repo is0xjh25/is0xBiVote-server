@@ -5,44 +5,60 @@ class VoteSerializer < ActiveModel::Serializer
         
         data={}
         
-        data[:yes] = count_yes
-        data[:no] = count_no
+        data[:yes] = count_vote_two('yes')
+        data[:no] = count_vote_two('no')
         data[:leading] = find_leading
-        data[:not_interested] = count_not_interested
+        data[:not_interested] = count_vote_two('not_interested')
         data[:change_mind] = count_change_mind
         data[:inspired_by_others] = count_inspired_by_others
-        data[:hard_to_tell] = count_hard_to_tell
+        data[:hard_to_tell] = count_vote_two('no_opinion')
 
         return data
     end
 
     private
 
-    def count_yes
-        1
-    end
-
-    def count_no
-        2
+    def count_vote_two(selection)
+        
+        query = 
+            "SELECT COUNT (*) FROM vote_records
+            WHERE vote_id=#{object.id} AND vote_two='#{selection}'"
+        
+        res = ActiveRecord::Base.connection.execute(query)
+        output = res[0]['count']
+        
+        return output
     end
 
     def find_leading
-        3
-    end
-
-    def count_not_interested
-    4
+        if count_vote_two('yes') > count_vote_two('no')
+            return 'yes'
+        elsif count_vote_two('no') > count_vote_two('yes')
+            return 'no'
+        else
+            return 'tie'
+        end
     end
 
     def count_change_mind
-    5
+        
+        query = 
+            "SELECT COUNT(*) FROM vote_records
+            WHERE vote_id=#{object.id} AND vote_one!=vote_two AND vote_one!='no_opinion'"
+        
+        res = ActiveRecord::Base.connection.execute(query)
+        output = res[0]['count']
+        
+        return output
     end
 
     def count_inspired_by_others
-        6    
-    end
         
-    def count_hard_to_tell
-        7
+        query = 
+        "SELECT COUNT(*) FROM vote_records
+        WHERE vote_id=#{object.id} AND vote_two!='no_opinion' AND vote_one='no_opinion'"
+    
+        res = ActiveRecord::Base.connection.execute(query)
+        output = res[0]['count']
     end
 end
