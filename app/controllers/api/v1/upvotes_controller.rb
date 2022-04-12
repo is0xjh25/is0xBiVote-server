@@ -6,8 +6,8 @@ class Api::V1::UpvotesController < ApplicationController
 		post = Post.find_by_id(params[:id])
 		return render json: { error: "post not found" }, status: :not_found if !post
 		
-		@upvote = Upvote.find_or_create_by(user: current_user, post: post)
-		return render json: { upvote: UpvoteSerializer.new(@upvote) }, status: :created
+		upvote = Upvote.find_or_create_by(user: current_user, post: post)
+		return render json: { upvote: UpvoteSerializer.new(upvote) }, status: :created
 	end
 
 	# [DELETE] undo upvote
@@ -16,9 +16,9 @@ class Api::V1::UpvotesController < ApplicationController
 		post = Post.find_by_id(params[:id])
 		return render json: { error: "post not found" }, status: :not_found if !post
 		
-		@upvote = Upvote.find_by(user: current_user, post: post)
-		if @upvote
-			@upvote.delete
+		upvote = Upvote.find_by(user: current_user, post: post)
+		if upvote
+			upvote.delete
 			return render json: { upvote: "upvote has been removed"}, status: :accepted
 		else
 			return render json: { error: "upvote not found" }, status: :not_found

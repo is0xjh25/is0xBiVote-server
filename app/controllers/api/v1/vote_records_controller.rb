@@ -26,11 +26,11 @@ class Api::V1::VoteRecordsController < ApplicationController
 		vote = Vote.find(params[:id])
 		return render json: { error: "vote not found" }, status: :not_found if !vote
 
-		@vote_record = VoteRecord.find_by(vote: vote, user: current_user)
+		vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 		
-		if @vote_record
-			@vote_record.update(vote_record_update_params)
-			render json: { vote_record: VoteRecordSerializer.new(@vote_record) }, status: :ok
+		if vote_record
+			vote_record.update(vote_record_update_params)
+			render json: { vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
 		else
 			render json: { error: "vote record not found" }, status: :not_found
 		end
