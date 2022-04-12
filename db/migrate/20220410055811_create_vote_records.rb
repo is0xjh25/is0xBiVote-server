@@ -5,7 +5,7 @@ class CreateVoteRecords < ActiveRecord::Migration[6.1]
       t.references :vote, null: false, foreign_key: true
       t.string :vote_one
       t.string :vote_two
-      t.string :status, :default => "start", :null => false
+      t.string :status, default: "start", null: false
 
       t.timestamps
     end

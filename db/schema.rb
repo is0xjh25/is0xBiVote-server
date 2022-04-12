@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2022_04_10_055811) do
     t.bigint "user_id", null: false
     t.bigint "vote_id", null: false
     t.text "content", null: false
+    t.string "vote_two", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
