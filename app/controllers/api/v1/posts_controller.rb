@@ -31,7 +31,7 @@ class Api::V1::PostsController < ApplicationController
 		
 		post = Post.find_by(user: current_user, vote: vote)
 		if post
-			@post.delete
+			post.delete
 			render json: { post: "post has been removed" }, status: :accepted
 		else
 			render json: { error: "post not found" }, status: :not_found
