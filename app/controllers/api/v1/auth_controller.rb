@@ -6,10 +6,10 @@ class Api::V1::AuthController < ApplicationController
 		@user = User.where("lower(username) =?", user_login_params[:username].downcase).first
 		
 		if @user && @user.authenticate(user_login_params[:password])
-			token = encode_token({ user_id: @user.id, due_time: Time.now + 7200 })
-			render response.headers['Authorization'] = token, json: { success: "login successfully", user: UserSerializer.new(@user), jwt: token }, status: :accepted
+			token = encode_token({ user_id: @user.id, due_time: Time.now + 86400 })
+			render response.headers['Authorization'] = token, json: { message: "login successfully", user: UserSerializer.new(@user) }, status: :accepted
 		else
-			render json: { error: "invalid username or password" }, status: :unauthorized
+			render json: { message: "invalid username or password" }, status: :unauthorized
 		end
 	end
   
