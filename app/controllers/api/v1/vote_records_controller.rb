@@ -9,11 +9,11 @@ class Api::V1::VoteRecordsController < ApplicationController
 		vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 
 		if vote_record
-			return render json: { message: "vote record found", vote: VoteSerializer.new(vote), vote_record: VoteRecordSerializer.new(vote_record), post: PostCollectSerializer.new(vote, user_id: current_user.id) }, status: :ok
+			return render json: { message: "vote record found", vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
 		else
 			if vote.status == "progressing" 
 				vote_record = VoteRecord.create(vote: vote, user: current_user, status: "start")
-				return render json: {  message: "vote record has been created",  vote: VoteSerializer.new(vote), vote_record: VoteRecordSerializer.new(vote_record) }, status: :created
+				return render json: {  message: "vote record has been created", vote_record: VoteRecordSerializer.new(vote_record) }, status: :created
 			elsif vote.status == "closed"
 				return render json: { message: "the vote is closed" }, status: :forbidden
 			end

@@ -7,8 +7,10 @@ Rails.application.routes.draw do
 		get '/profile', to: 'users#info'
 		patch '/profile', to: 'users#update'
 		
-		get '/vote/:id', to: 'vote_records#info'
-		patch '/vote/:id', to: 'vote_records#update'
+		get '/vote-entries', to: 'votes#entry'
+		get '/vote/:id', to: 'votes#info'
+		get '/user-vote/:id', to: 'vote_records#info'
+		patch '/user-vote/:id', to: 'vote_records#update'
 
 		get '/post/:id', to: 'posts#info'
 		post '/post/:id', to: 'posts#create'

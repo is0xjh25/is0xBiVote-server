@@ -39,15 +39,19 @@ class PostCollectSerializer < ActiveModel::Serializer
 
 	def owned
 		
-		query =
-			"SELECT id FROM posts
-			WHERE vote_id = #{object.id} AND user_id = #{@instance_options[:user_id]}"
+		if (@instance_options[:user_id] != nil)
+			query =
+				"SELECT id FROM posts
+				WHERE vote_id = #{object.id} AND user_id = #{@instance_options[:user_id]}"
 
-		res = ActiveRecord::Base.connection.execute(query)
-		post = Post.find_by(id: res[0]['id'])
-		
-		output = PostSerializer.new(post)
-		
+			res = ActiveRecord::Base.connection.execute(query)
+			post = Post.find_by(id: res[0]['id'])
+			
+			output = PostSerializer.new(post)
+		else
+			output = {}
+		end
+
 		return output
 	end
 end
