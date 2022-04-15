@@ -4,20 +4,20 @@ class Api::V1::VotesController < ApplicationController
 	# [GET] weekly votes
 	def entry
 		votes = find_votes;
-		return render json: {message: "fetch weekly votes successfully", vote_entries: votes }, status: :ok
+		return render json: {message: "Fetch weekly votes successfully.", vote_entries: votes }, status: :ok
 	end
 
 	# [GET] a vote info
 	def info
 		vote = Vote.find_by_id(params[:id])
-		return render json: { message: "vote not found" }, status: :not_found if !vote
+		return render json: { message: "Vote not found." }, status: :not_found if !vote
 		
 		if (current_user != nil) 
 			user_id = current_user.id
 		else 
 			user_id = nil
 		end
-		return render json: {message: "fetch the vote information successfully", vote: VoteSerializer.new(vote),  post: PostCollectSerializer.new(vote, user_id: user_id) }, status: :ok	
+		return render json: {message: "Fetch the vote information successfully.", vote: VoteSerializer.new(vote),  post: PostCollectSerializer.new(vote, user_id: user_id) }, status: :ok	
 	end
 
 	private

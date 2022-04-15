@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
 
 	# [GET] user's profile
 	def info
-		return render json: {message: "fetch user profile successfully", user: UserSerializer.new(current_user) }, status: :accepted
+		return render json: {message: "Fetch user profile successfully.", user: UserSerializer.new(current_user) }, status: :accepted
 	end
 
 	# [POST] create new user
@@ -13,12 +13,12 @@ class Api::V1::UsersController < ApplicationController
 		
 		if user.valid?
 			token = encode_token({ user_id: user.id, due_time: Time.now + 86400 })
-			render response.headers['Authorization'] = token, json: { message: "the new user has been created", user: UserSerializer.new(user) }, status: :accepted
+			render response.headers['Authorization'] = token, json: { message: "The new user has been created.", user: UserSerializer.new(user) }, status: :accepted
 		else
 			if find_username(user_create_params[:username]) 
-				return render json: { message: "username is registered" }, status: :conflict
+				return render json: { message: "Username is registered." }, status: :conflict
 			elsif find_email(user_create_params[:email])
-				return render json: { message: "email is registered" }, status: :conflict
+				return render json: { message: "Email is registered." }, status: :conflict
 			end
 		end
 	end
@@ -26,10 +26,10 @@ class Api::V1::UsersController < ApplicationController
 	# [PATCH] update new user
 	def update		
 		if find_email(user_update_params[:email]) && user_update_params[:email] != current_user.email
-			return render json: { message: "email is registered" }, status: :conflict
+			return render json: { message: "Email is registered." }, status: :conflict
 		else
 			current_user.update(user_update_params)
-			return render json: { message: "profile has been updated", user: UserSerializer.new(current_user) }, status: :ok
+			return render json: { message: "Profile has been updated.", user: UserSerializer.new(current_user) }, status: :ok
 		end
 	end
 

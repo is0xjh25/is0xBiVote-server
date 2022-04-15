@@ -41,6 +41,6 @@ class ApplicationController < ActionController::API
 	end
 
 	def authorized
-		render json: { message: "please log in" }, status: :unauthorized unless logged_in?
+		render json: { message: "User is not authorized." }, status: :unauthorized unless logged_in?
 	end
 end

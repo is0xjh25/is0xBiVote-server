@@ -4,18 +4,18 @@ class Api::V1::VoteRecordsController < ApplicationController
 	def info
 
 		vote = Vote.find_by_id(params[:id])
-		return render json: { message: "vote not found" }, status: :not_found if !vote
+		return render json: { message: "Vote not found." }, status: :not_found if !vote
 		
 		vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 
 		if vote_record
-			return render json: { message: "vote record found", vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
+			return render json: { message: "Vote record found.", vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
 		else
 			if vote.status == "progressing" 
 				vote_record = VoteRecord.create(vote: vote, user: current_user, status: "start")
-				return render json: {  message: "vote record has been created", vote_record: VoteRecordSerializer.new(vote_record) }, status: :created
+				return render json: {  message: "Vote record has been created.", vote_record: VoteRecordSerializer.new(vote_record) }, status: :created
 			elsif vote.status == "closed"
-				return render json: { message: "the vote is closed" }, status: :forbidden
+				return render json: { message: "The vote is closed." }, status: :forbidden
 			end
 		end
 	end
@@ -24,15 +24,15 @@ class Api::V1::VoteRecordsController < ApplicationController
 	def update
 
 		vote = Vote.find(params[:id])
-		return render json: { message: "vote not found" }, status: :not_found if !vote
+		return render json: { message: "Vote not found." }, status: :not_found if !vote
 
 		vote_record = VoteRecord.find_by(vote: vote, user: current_user)
 		
 		if vote_record
 			vote_record.update(vote_record_update_params)
-			render json: { message: "vote has been noted", vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
+			render json: { message: "Vote has been noted.", vote_record: VoteRecordSerializer.new(vote_record) }, status: :ok
 		else
-			render json: { message: "vote record not found" }, status: :not_found
+			render json: { message: "Vote record not found." }, status: :not_found
 		end
 	end
 
