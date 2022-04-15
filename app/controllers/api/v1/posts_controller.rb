@@ -8,7 +8,7 @@ class Api::V1::PostsController < ApplicationController
 
 		vote_record = VoteRecord.find_by(user_id: current_user.id, vote_id: vote.id)
 		return render json: { message: "Vote record not found." }, status: :not_found if !vote_record
-		return render json: { message: "The vote is neither yes nor no, it cannot be commented." }, status: :not_acceptable if vote_record.vote_two == 'no_opinion' || vote_record.vote_two == 'not_interested'
+		return render json: { message: "The result of your vote is neither yes nor no, therefore it cannot be commented." }, status: :not_acceptable if vote_record.vote_two == 'no_opinion' || vote_record.vote_two == 'not_interested'
 
 		post = Post.find_by(user: current_user, vote: vote)
 		if post
