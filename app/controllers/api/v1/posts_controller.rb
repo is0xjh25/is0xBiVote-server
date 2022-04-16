@@ -1,5 +1,20 @@
 class Api::V1::PostsController < ApplicationController
+	skip_before_action :authorized, only: [:info]
 	
+	# [GET] post info
+	def info
+		post = Post.find_by_id(params[:id])
+		return render json: { message: "Post not found." }, status: :not_found if !post
+
+		if (current_user != nil) 
+			user_id = current_user.id
+		else 
+			user_id = nil
+		end
+
+		return render json: { message: "Fetch the post information successfully.", post: PostSerializer.new(post, user_id: user_id) }, status: :ok
+	end
+
 	# [POST] new post
 	def create
 		

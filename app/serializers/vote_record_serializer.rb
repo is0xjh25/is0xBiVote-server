@@ -5,9 +5,9 @@ class VoteRecordSerializer < ActiveModel::Serializer
     post = Post.find_by(vote_id: object.vote_id, user_id: object.user_id)
 
     if post
-      output = PostSerializer.new(post)
+      output = post.id
     else
-      output = {}
+      output = nil
     end
 
     return output
