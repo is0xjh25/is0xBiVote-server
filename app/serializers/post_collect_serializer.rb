@@ -5,7 +5,7 @@ class PostCollectSerializer < ActiveModel::Serializer
 		
 		query =
 			"SELECT posts.id FROM posts
-			INNER JOIN upvotes ON posts.id = upvotes.post_id
+			LEFT JOIN upvotes ON posts.id = upvotes.post_id
 			WHERE vote_id = #{object.id} AND vote_two = 'yes'
 			GROUP BY posts.id
 			ORDER BY COUNT(*) DESC"
@@ -20,7 +20,7 @@ class PostCollectSerializer < ActiveModel::Serializer
 
 		query =
 			"SELECT posts.id FROM posts
-			INNER JOIN upvotes ON posts.id = upvotes.post_id
+			LEFT JOIN upvotes ON posts.id = upvotes.post_id
 			WHERE vote_id = #{object.id} AND vote_two = 'no'
 			GROUP BY posts.id
 			ORDER BY COUNT(*) DESC"
