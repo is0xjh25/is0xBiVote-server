@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 		
 		get '/vote-entries', to: 'votes#entry'
 		get '/vote/:id', to: 'votes#info'
+		get '/search-date/:date', to: 'votes#search_by_date'
+		get '/search-keyword/:keyword', to: 'votes#search_by_keyword'
+
 		get '/user-vote/:id', to: 'vote_records#info'
 		patch '/user-vote/:id', to: 'vote_records#update'
 

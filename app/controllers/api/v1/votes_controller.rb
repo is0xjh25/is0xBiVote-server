@@ -1,5 +1,5 @@
 class Api::V1::VotesController < ApplicationController
-	skip_before_action :authorized, only: [:entry, :info]
+	skip_before_action :authorized, only: [:entry, :info, :search_by_keyword, :search_by_date]
 
 	# [GET] weekly votes
 	def entry
@@ -20,6 +20,40 @@ class Api::V1::VotesController < ApplicationController
 		return render json: {message: "Fetch the vote information successfully.", vote: VoteSerializer.new(vote),  post: PostCollectSerializer.new(vote, user_id: user_id) }, status: :ok	
 	end
 
+	# [GET] search history by date
+	def search_by_date
+		
+		date = params[:date]
+		upper_date = DateTime.parse(date).to_date.to_s
+		lower_date = (DateTime.parse(date) - 90).to_date.to_s
+		
+		query =
+			"SELECT id, name, start_time FROM votes
+			WHERE start_time <= '#{upper_date}' and start_time >= '#{lower_date}'
+			ORDER BY start_time DESC"
+
+		res = ActiveRecord::Base.connection.execute(query)
+		output = res
+
+		return render json: {message: "Fetch the vote information successfully.", history: HistorySerializer.new(date: date, result: output) }, status: :ok	
+	end
+
+	# [GET] search history by keyword
+	def search_by_keyword
+		
+		keyword = params[:keyword]
+
+		query = 
+			"SELECT id, name, start_time FROM votes
+			WHERE name iLIKE '#{keyword}%' OR name iLIKE '%#{keyword}%' OR name iLIKE '%#{keyword}'
+			OR category iLIKE '#{keyword}%' OR category iLIKE '%#{keyword}%' OR category iLIKE '%#{keyword}'"
+		
+		res = ActiveRecord::Base.connection.execute(query)
+		output = res
+			
+		return render json: {message: "Fetch the vote information successfully.", history: HistorySerializer.new(keyword: keyword, result: output) }, status: :ok	
+	end
+
 	private
 	
 	def find_votes
@@ -30,6 +64,3 @@ class Api::V1::VotesController < ApplicationController
 		return { world: world_id, mystery: mystery_id, sport: sport_id, entertainment: entertainment_id}
 	end
 end
-
-
-
