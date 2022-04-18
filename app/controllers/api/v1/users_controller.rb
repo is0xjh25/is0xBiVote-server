@@ -1,9 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 	skip_before_action :authorized, only: [:create, :test]
 
-	def test
-		return render json: {message: "Test successfully." }, status: :accepted
-	end
 	# [GET] user's profile
 	def info
 		return render json: {message: "Fetch user profile successfully.", user: UserSerializer.new(current_user) }, status: :accepted
