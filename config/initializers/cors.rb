@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://bivote-606ca.web.app", 'http://localhost:3000', 'http://localhost:5000'
+    origins "ENV[FRONTEND_URL]", 'http://localhost:3000', 'http://localhost:5000'
 
     resource '*',
       headers: :any,
