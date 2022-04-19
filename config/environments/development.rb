@@ -80,7 +80,7 @@ Rails.application.configure do
     port: 587, 
     domain: ENV["EMAIL_DOMAIN"],
     user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
+    password: "bhnwjajechlcwxrt",
     authentication: 'plain',
     enable_starttls_auto: true
   }
