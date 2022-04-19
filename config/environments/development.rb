@@ -1,5 +1,6 @@
 require "active_support/core_ext/integer/time"
 
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -63,4 +64,26 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: ENV["EMAIL_USERNAME"]}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { 
+    :host => ENV["EMAIL_HOST"], 
+    protocol: ENV["EMAIL_PROTOCOL"]
+  }
+
+  config.action_mailer.smtp_settings = {
+    address: ENV["EMAIL_URL"], 
+    port: 587, 
+    domain: ENV["EMAIL_DOMAIN"],
+    user_name: ENV["EMAIL_USERNAME"],
+    password: ENV["EMAIL_PASSWORD"],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
+
+
