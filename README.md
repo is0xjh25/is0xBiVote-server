@@ -6,6 +6,7 @@
 * [About the Application](#about-the-application)
 * [Getting Started](#getting-started)
 * [Usage](#usage)
+* [Technology](#technology)
 * [Developed By](#developed-by)
 
 ## About the Application
@@ -20,31 +21,32 @@
 - Execute the application
   > Type in terminal: `rails server`
 
-  
 ## Usage
-- **Login**
-  - ***Login***: Require username and password and the authentication is verifed by JWT which would be stored in browser cookie.
-  - ***Forgot Password***: Send a rescue password to user's email.
-  - ***Register***: Requrie username, email and password.
-- **Profile**
-  - ***View***: Display account information.
-  - ***Edit***: Email and password. Yet, username is unchangable.
-  - ***Log Out***: See you next time!
+- **Authentication**
+  - ***[POST] /login (auth#create)***:
+  - ***[POST] /forgot-password (auth#rescue)***:
+- **User**
+  - ***[POST] /users (users#create)***:
+  - ***[GET] /profile (users#info)***:
+  - ***[PATCH] /profile (users#update)***:
 - **Vote**
-  - ***1st Vote***: Vote by intuition.
-  - ***Read Posts***: Have a look on others' point of views
-  - ***2nd Vote***: Only this vote would be counted.
-  - ***Share Opinion***: Publish your thought and let people see it.
+  - ***[GET] /vote-entries (votes#entry)***:
+  - ***[GET] /vote/:id (votes#info)***:
+  - ***[GET] /search-date/:date (votes#search_by_date)***:
+  - ***[GET] /search-keyword/:keyword' (votes#search_by_keyword)***:
+- **Vote Record**
+  - ***[GET] /user-vote/:id (vote_records#info)***:
+  - ***[PATCH] /user-vote/:id (ote_records#update)***:
 - **Post**
-  - ***Post***: Publish your thought and let people see it.
-  - ***Delete Post***: Delete your post, then make another one (maybe)?
+  - ***[GET] /post/:id (posts#info)***:
+  - ***[POST] /post/:id (posts#create)***:
+  - ***[DELETE] /post/:id (posts#destroy)***:
 - **Upvote**
-  - ***Upvote***: Support others' posts.
-  - ***Undo Upvote***: Misclick? Let's get the upvote back.
-- **History**
-  - ***Search By Date***: The result would show the vote started in last 90 days of the selected date.
-  - ***Search By Keyword***: Keyword can be a part for vote's name or it can be one of the categories.
-
+  - ***[POST] /upvote/:id (upvotes#create)***:
+  - ***[DELETE] /upvote/:id (upvotes#destroy)***:
+  
+## Technology
+  
 ## Developed By
 - The application is developed by _[is0xjh25 (Yun-Chi Hsiao)](https://is0xjh25.github.io)_ 
 <br/>
