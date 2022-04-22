@@ -23,6 +23,8 @@ _BiVote server_ is an api server which works for _BiVote_ application. It reciev
   > Type in terminal: `rails server`
 - Before start
   > Ensure PostgreSQL is installed and the server is executing.
+- Read more about BiVote website
+  > Navigate to [is0xBiVote](https://github.com/is0xjh25/is0xBiVote)
 
 ## Usage
 - **Authentication**
