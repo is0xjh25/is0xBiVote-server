@@ -1,24 +1,52 @@
-# README
+# [is0xBiVote](https://is0xbivote.web.app)
+<p align="left">
+  <img alt="Logo" src="demo/bivote-favicon.png" width="150" >
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Table of Contents
+* [About the Application](#about-the-application)
+* [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Developed By](#developed-by)
 
-Things you may want to cover:
+## About the Application
 
-* Ruby version
+## Getting Started
+- Install gems
+  > Type in terminal: `bundle install`
+- Initialize the local database
+  > Type in terminal: `rake db:create`
+- Create required tables
+  > Type in terminal: `rake db:migrate`
+- Execute the application
+  > Type in terminal: `rails server`
 
-* System dependencies
+  
+## Usage
+- **Login**
+  - ***Login***: Require username and password and the authentication is verifed by JWT which would be stored in browser cookie.
+  - ***Forgot Password***: Send a rescue password to user's email.
+  - ***Register***: Requrie username, email and password.
+- **Profile**
+  - ***View***: Display account information.
+  - ***Edit***: Email and password. Yet, username is unchangable.
+  - ***Log Out***: See you next time!
+- **Vote**
+  - ***1st Vote***: Vote by intuition.
+  - ***Read Posts***: Have a look on others' point of views
+  - ***2nd Vote***: Only this vote would be counted.
+  - ***Share Opinion***: Publish your thought and let people see it.
+- **Post**
+  - ***Post***: Publish your thought and let people see it.
+  - ***Delete Post***: Delete your post, then make another one (maybe)?
+- **Upvote**
+  - ***Upvote***: Support others' posts.
+  - ***Undo Upvote***: Misclick? Let's get the upvote back.
+- **History**
+  - ***Search By Date***: The result would show the vote started in last 90 days of the selected date.
+  - ***Search By Keyword***: Keyword can be a part for vote's name or it can be one of the categories.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Developed By
+- The application is developed by _[is0xjh25 (Yun-Chi Hsiao)](https://is0xjh25.github.io)_ 
+<br/>
+<p align="left">
+  <img alt="Favicon" src="demo/is0-favicon.png" width="250" >
