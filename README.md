@@ -26,7 +26,7 @@ _BiVote server_ is an api server which works for _BiVote_ application. It reciev
 
 ## Usage
 - **Authentication**
-  - ***[POST] /login (auth#create)***: Require username and password, return a JWT if verify.
+  - ***[POST] /login (auth#create)***: Require username and password, return a JWT if the user is verified.
   - ***[POST] /forgot-password (auth#rescue)***: Send a new password to user's email.
 - **User**
   - ***[POST] /users (users#create)***: Create a new user.
